@@ -11,10 +11,10 @@ case class Link(link: String)
 case class ClickThroughLink(result: String,
                             clickThroughSelectors: String, resolvedLink: String)
 
-class PageRetriever extends Actor {
-  override def receive {
-
-    ???
-  }
-}
+//class PageRetriever extends Actor {
+//  override def receive {
+//
+//    ???
+//  }
+//}
 

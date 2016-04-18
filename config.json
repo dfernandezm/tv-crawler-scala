@@ -1,0 +1,10 @@
+{
+  "crawlers": [
+    {
+      "eliteTorrent": {
+        "siteId": "ET",
+        "baseUrl": "http://www.elitorrent.net"
+      }
+    }
+  ]
+}
