@@ -14,7 +14,7 @@ libraryDependencies += "net.ruippeixotog" %% "scala-scraper" % "1.0.0"
 
 libraryDependencies += "com.github.scopt" %% "scopt" % "3.4.0"
 
-libraryDependencies += "com.lambdaworks" % "jacks_2.9.3" % "2.2.3"
+libraryDependencies += "com.lambdaworks" % "jacks_2.11" % "2.3.3"
 
 //resolvers += Resolver.sonatypeRepo("public")
 
