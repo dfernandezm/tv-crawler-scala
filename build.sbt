@@ -16,5 +16,8 @@ libraryDependencies += "com.github.scopt" %% "scopt" % "3.4.0"
 
 libraryDependencies += "com.lambdaworks" % "jacks_2.11" % "2.3.3"
 
+libraryDependencies += "net.liftweb" % "lift-json_2.11" % "2.6.3"
+
+
 //resolvers += Resolver.sonatypeRepo("public")
 

@@ -7,9 +7,11 @@ package com.morenware.tvcrawler
 import java.io.File
 import com.lambdaworks.jacks.JacksMapper
 import io._
-import scala.util.parsing.json.JSON
+import net.liftweb.json._
 
 case class Config(crawlerConf: File = new File("."))
+case class CrawlerConfig(name: String, siteId: String, baseUrl: String)
+case class CrawlersConfig (crawlers: List[CrawlerConfig])
 
 object CrawlingMain {
 
@@ -19,13 +21,23 @@ object CrawlingMain {
   }
 
   def readConfigFromFile(): Unit = {
+
     val f = new File("/tmp/config.json")
     val source = Source.fromFile("/tmp/config.json")
     val lines = try source.mkString finally source.close()
     println("Lines: \n" + lines)
-    val rawJson = JSON.parseFull(lines)
-    val json = rawJson.asInstanceOf[Option[Map[String,List[Map[String,String]]]]]
-    println("Json: ", json)
+
+    implicit val formats = DefaultFormats
+
+    val json = parse(lines)
+
+    val config: CrawlersConfig = json.extract[CrawlersConfig]
+
+    config.crawlers.foreach( crawler => {
+      println(crawler.baseUrl)
+      println(crawler.name)
+      println(crawler.siteId)
+    })
   }
 
   def readCommandLineArguments(args: Array[String]): Unit = {
@@ -44,7 +56,7 @@ object CrawlingMain {
         val source = Source.fromFile(f)
         val lines = try source.mkString finally source.close()
         println("Lines:\n" + lines);
-        
+
       case None =>
         println("Bad Arguments")
         // arguments are bad, error message will have been displayed
