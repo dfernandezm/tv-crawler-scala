@@ -1,27 +1,19 @@
-package com.morenware.tvcrawler
-
-/**
- * Created by david on 18/04/2016.
- */
+package com.morenware.tvcrawler.config
 
 import java.io.File
-import com.lambdaworks.jacks.JacksMapper
+
+import net.liftweb.json.DefaultFormats
+
 import io._
 import net.liftweb.json._
-
 case class Config(crawlerConf: File = new File("."))
-case class WebsiteSection()
-case class CrawlerConfig(name: String, siteId: String, baseUrl: String, sections: List[WebsiteSection])
-case class CrawlersConfig (crawlers: List[CrawlerConfig])
 
-object CrawlingMain {
+/**
+ * Created by david on 20/04/2016.
+ */
+object Configuration {
 
-  def main(args: Array[String]) = {
-    readConfigFromFile()
-    //readCommandLineArguments(args)
-  }
-
-  def readConfigFromFile(): Unit = {
+  def readConfigFromFile(): CrawlersConfig = {
 
     val source = Source.fromFile("config.json")
     val lines = try source.mkString finally source.close()
@@ -37,7 +29,10 @@ object CrawlingMain {
       println(crawler.baseUrl)
       println(crawler.name)
       println(crawler.siteId)
+      println(crawler.sections(0).torrentLinkType)
     })
+
+    config
   }
 
   def readCommandLineArguments(args: Array[String]): Unit = {
@@ -59,7 +54,9 @@ object CrawlingMain {
 
       case None =>
         println("Bad Arguments")
-        // arguments are bad, error message will have been displayed
+      // arguments are bad, error message will have been displayed
     }
   }
+
+
 }
