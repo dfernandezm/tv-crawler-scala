@@ -10,7 +10,8 @@ import io._
 import net.liftweb.json._
 
 case class Config(crawlerConf: File = new File("."))
-case class CrawlerConfig(name: String, siteId: String, baseUrl: String)
+case class WebsiteSection()
+case class CrawlerConfig(name: String, siteId: String, baseUrl: String, sections: List[WebsiteSection])
 case class CrawlersConfig (crawlers: List[CrawlerConfig])
 
 object CrawlingMain {
@@ -22,8 +23,7 @@ object CrawlingMain {
 
   def readConfigFromFile(): Unit = {
 
-    val f = new File("/tmp/config.json")
-    val source = Source.fromFile("/tmp/config.json")
+    val source = Source.fromFile("config.json")
     val lines = try source.mkString finally source.close()
     println("Lines: \n" + lines)
 

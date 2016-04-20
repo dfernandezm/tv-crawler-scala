@@ -1,10 +1,26 @@
 {
   "crawlers": [
     {
-      "eliteTorrent": {
-        "siteId": "ET",
-        "baseUrl": "http://www.elitorrent.net"
-      }
+      "name": "EliteTorrent",
+      "siteId": "ET",
+      "baseUrl": "http://www.elitetorrent.net",
+      "language": "es",
+       "sections": [{
+        "name": "TV Shows",
+        "sectionLink": "/categoria/4/series",
+        "torrentLinkType": "TORRENT_FILE",
+         "type": "TV_SHOWS",
+         "contentType": "TV_SHOW",
+        "dateStyle": "SPANISH_AGE",
+        "pagerParameter": "/pag:{pageNumber}",
+        "listModeParameter": "/modo:listado",
+         "torrentDataListSelector": "table.fichas-listado tr",
+         "headerSelector": ".cabecera",
+        "orderByDateParameter": "/orden:fecha",
+        "totalNumberOfElementsRegex": "",
+        "totalNumberOfPagesRegex": "Series\\s+\\(total\\s+(.*)\\)",
+        "totalNumberOfPagesSelector": "div.paginacion > a"
+      }]
     }
   ]
 }
