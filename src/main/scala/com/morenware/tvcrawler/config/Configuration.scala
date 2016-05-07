@@ -2,10 +2,12 @@ package com.morenware.tvcrawler.config
 
 import java.io.File
 
+import com.typesafe.scalalogging.Logger
 import net.liftweb.json.DefaultFormats
 
 import io._
 import net.liftweb.json._
+import org.slf4j.LoggerFactory
 case class Config(crawlerConf: File = new File("."))
 
 /**
@@ -13,25 +15,28 @@ case class Config(crawlerConf: File = new File("."))
  */
 object Configuration {
 
+  val log = Logger(LoggerFactory.getLogger("crawlers"))
+
   def readConfigFromFile(): CrawlersConfig = {
 
     val source = Source.fromFile("config.json")
     val lines = try source.mkString finally source.close()
-    println("Lines: \n" + lines)
+
+    log.debug(s"**** Configuration is: $lines")
 
     implicit val formats = DefaultFormats
-
     val json = parse(lines)
-
     val config: CrawlersConfig = json.extract[CrawlersConfig]
 
+    // Log some values
     config.crawlers.foreach( crawler => {
-      println(crawler.baseUrl)
-      println(crawler.name)
-      println(crawler.siteId)
-      println(crawler.sections(0).torrentLinkType)
+      log.debug(s"***** Base url: ${crawler.baseUrl}" )
+      log.debug(s"***** Name: ${crawler.name}" )
+      log.debug(s"***** Site ID: ${crawler.siteId}" )
+      log.debug(s"***** Section 1 link type: ${crawler.sections.head.torrentLinkType}" )
     })
 
+    // Return this config
     config
   }
 
@@ -39,9 +44,10 @@ object Configuration {
 
     val parser = new scopt.OptionParser[Config]("scopt") {
       head("tvCrawler", "0.1")
-      opt[File]('c', "conf") required() valueName("<confFile.json>") action { (x, c) =>
-        c.copy(crawlerConf = x) } text("conf requires a json configuration file")
-    }
+      opt[File]('c', "conf") required() valueName "<confFile.json>" action {
+        (x, c) =>
+          c.copy(crawlerConf = x) } text "conf requires a json configuration file"
+        }
 
     parser.parse(args, Config()) match {
 
@@ -58,5 +64,13 @@ object Configuration {
     }
   }
 
+// Try / catch example
+//  try {
+//    throw new NullPointerException()
+//  } catch {
+//
+//    // Could use wildcard _, but that way cannot be used afterwards like I am doing here
+//    case any: Throwable => log.error(s"Exception occurred: ${any.getMessage}")
+//  }
 
 }

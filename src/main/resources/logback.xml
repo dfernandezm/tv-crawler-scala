@@ -1,0 +1,36 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- path to your log file, where you want to store logs -->
+        <file>/tmp/tvCrawler.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_PAGE_RETRIEVER" class="ch.qos.logback.core.FileAppender">
+        <!-- path to your log file, where you want to store logs -->
+        <file>/tmp/pageRetriever.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Additivity false: only to the specific appender -->
+    <logger name="pageRetriever" level="debug" class="com.morenware.tvcrawler.actors.PageRetriever" additivity="false">
+        <appender-ref ref="FILE_PAGE_RETRIEVER" />
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

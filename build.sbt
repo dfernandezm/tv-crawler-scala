@@ -18,6 +18,7 @@ libraryDependencies += "com.lambdaworks" % "jacks_2.11" % "2.3.3"
 
 libraryDependencies += "net.liftweb" % "lift-json_2.11" % "2.6.3"
 
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0"
 
-//resolvers += Resolver.sonatypeRepo("public")
+libraryDependencies += "ch.qos.logback" %  "logback-classic" % "1.1.7"
 
